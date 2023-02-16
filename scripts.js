@@ -63,6 +63,9 @@ numbers.forEach(number => {
         if ((charList.length === 0) && (number.innerText !== "0")) { // Prevent 0 from being the first input
             charList.push(number.innerText);
             console.log(charList);
+        } else if (charList.length >= 1) {
+            charList.push(number.innerText);
+            console.log(charList);
         }
     });
 });
@@ -71,17 +74,19 @@ let sign = null;
 
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
-        if (sign == null) {
-            sign = operator.innerText;
-            console.log(typeof sign);
-            charList.push(operator.innerText);
-            console.log(charList);
+        if (charList.length !== 0) { // Prevent an operator from being the first input
+            if (sign == null) {
+                sign = operator.innerText;
+                console.log(typeof sign);
+                charList.push(operator.innerText);
+                console.log(charList);
+            }
         }
     });
 });
 
 equals.addEventListener("click", () => {
-    if (condition) {
+    if ((typeof Number(charList[0]) === "number") && (typeof Number(charList[-1]) === "number") && (sign !== null)) {
         let charString = charList.join("");
         console.log(charString);
         let numList = charString.split(sign);
@@ -96,6 +101,3 @@ equals.addEventListener("click", () => {
         console.log(charList);
     }
 });
-
-let testArr = ["123",678];
-console.log(testArr[0][0]);
