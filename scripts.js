@@ -53,9 +53,6 @@ const equals = document.querySelector("#equals");
 // Convert the first and second number variables to number type
 // Pass numbers and operator into operate function
 
-// first input must be 1 through 9
-// allow equals press only if there is a number / operator / number in character list
-
 let charList = [];
 
 numbers.forEach(number => {
@@ -63,9 +60,11 @@ numbers.forEach(number => {
         if ((charList.length === 0) && (number.innerText !== "0")) { // Prevent 0 from being the first input
             charList.push(number.innerText);
             console.log(charList);
+            screen.innerText = charList.join("");
         } else if (charList.length >= 1) {
             charList.push(number.innerText);
             console.log(charList);
+            screen.innerText = charList.join("");
         }
     });
 });
@@ -80,13 +79,14 @@ operators.forEach(operator => {
                 console.log(typeof sign);
                 charList.push(operator.innerText);
                 console.log(charList);
+                screen.innerText = sign;
             }
         }
     });
 });
 
 equals.addEventListener("click", () => {
-    if ((typeof Number(charList[0]) === "number") && (typeof Number(charList[-1]) === "number") && (sign !== null)) {
+    if ((isNaN(charList[0]) === false) && (isNaN(charList[charList.length - 1]) === false) && (sign !== null)) { // Prevent equals button click without number/operator/number sequence
         let charString = charList.join("");
         console.log(charString);
         let numList = charString.split(sign);
@@ -95,6 +95,7 @@ equals.addEventListener("click", () => {
         console.log(firstNum);
         console.log(secondNum);
         let total = operate(sign, Number(firstNum), Number(secondNum));
+        screen.innerText = total;
         sign = null;
         charList = [];
         charList[0] = total;
