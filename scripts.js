@@ -53,12 +53,17 @@ const equals = document.querySelector("#equals");
 // Convert the first and second number variables to number type
 // Pass numbers and operator into operate function
 
+// first input must be 1 through 9
+// allow equals press only if there is a number / operator / number in character list
+
 let charList = [];
 
 numbers.forEach(number => {
     number.addEventListener("click", () => {
-        charList.push(number.innerText);
-        console.log(charList);
+        if ((charList.length === 0) && (number.innerText !== "0")) { // Prevent 0 from being the first input
+            charList.push(number.innerText);
+            console.log(charList);
+        }
     });
 });
 
@@ -76,18 +81,20 @@ operators.forEach(operator => {
 });
 
 equals.addEventListener("click", () => {
-    let charString = charList.join("");
-    console.log(charString);
-    let numList = charString.split(sign);
-    console.log(numList);
-    let [firstNum, secondNum] = numList;
-    console.log(firstNum);
-    console.log(secondNum);
-    let total = operate(sign, Number(firstNum), Number(secondNum));
-    sign = null;
-    charList = [];
-    charList[0] = total;
-    console.log(charList);
+    if (condition) {
+        let charString = charList.join("");
+        console.log(charString);
+        let numList = charString.split(sign);
+        console.log(numList);
+        let [firstNum, secondNum] = numList;
+        console.log(firstNum);
+        console.log(secondNum);
+        let total = operate(sign, Number(firstNum), Number(secondNum));
+        sign = null;
+        charList = [];
+        charList[0] = total;
+        console.log(charList);
+    }
 });
 
 let testArr = ["123",678];
