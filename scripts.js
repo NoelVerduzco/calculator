@@ -74,7 +74,7 @@ let sign = null;
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
         if (charList.length !== 0) { // Prevent an operator from being the first input
-            if (sign == null) {
+            if (sign === null) {
                 sign = operator.innerText;
                 console.log(typeof sign);
                 charList.push(operator.innerText);
@@ -82,6 +82,22 @@ operators.forEach(operator => {
                 screen.innerText = sign;
             }
         }
+        if ((isNaN(charList[0]) === false) && (isNaN(charList[charList.length - 1]) === false) && (sign !== null)) { // Allows number/operator/repeat sequence
+            let charString = charList.join("");
+            console.log(charString);
+            let numList = charString.split(sign);
+            console.log(numList);
+            let [firstNum, secondNum] = numList;
+            console.log(firstNum);
+            console.log(secondNum);
+            let total = operate(sign, Number(firstNum), Number(secondNum));
+            screen.innerText = total;
+            sign = operator.innerText;
+            charList = [];
+            charList[0] = total;
+            console.log(charList);
+            charList[1] = sign;
+        }   
     });
 });
 
