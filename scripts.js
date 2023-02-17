@@ -53,6 +53,20 @@ const equals = document.querySelector("#equals");
 // Convert the first and second number variables to number type
 // Pass numbers and operator into operate function
 
+// DECIMAL USAGE
+// Decimal can be used before and after sign
+
+// FIX NUMBER PRESS AFTER EQUALS PRESS
+// 9 * 9 = 81 type a number
+// Proper function should clear calculator after number is pressed AFTER an equals is pressed
+
+// ROUND ON-SCREEN
+// Round to three decimals on screen and history display only
+
+let historyText = [];
+
+let screenText = [];
+
 let charList = [];
 
 numbers.forEach(number => {
@@ -60,11 +74,17 @@ numbers.forEach(number => {
         if ((charList.length === 0) && (number.innerText !== "0")) { // Prevent 0 from being the first input
             charList.push(number.innerText);
             console.log(charList);
-            screen.innerText = charList.join("");
-        } else if (charList.length >= 1) {
+            historyText.push(number.innerText);
+            history.innerText = historyText.join("");
+            screenText.push(number.innerText);
+            screen.innerText = screenText.join("");
+        } else if (charList.length >= 1) { // THIS WILL NEED TO BE UPDATED WHEN DECIMALS ARE ALLOWED AS FIRST INPUTS
             charList.push(number.innerText);
             console.log(charList);
-            screen.innerText = charList.join("");
+            historyText.push(number.innerText);
+            history.innerText = historyText.join("");
+            screenText.push(number.innerText);
+            screen.innerText = screenText.join("");
         }
     });
 });
@@ -74,12 +94,15 @@ let sign = null;
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
         if (charList.length !== 0) { // Prevent an operator from being the first input
-            if (sign === null) {
+            if (sign === null) { // Allow only one operator per calculation
                 sign = operator.innerText;
                 console.log(typeof sign);
                 charList.push(operator.innerText);
                 console.log(charList);
-                screen.innerText = sign;
+                historyText.push(operator.innerText);
+                history.innerText = historyText.join("");
+                screenText.push(operator.innerText);
+                screen.innerText = screenText.join("");
             }
         }
         if ((isNaN(charList[0]) === false) && (isNaN(charList[charList.length - 1]) === false) && (sign !== null)) { // Allows number/operator/repeat sequence
@@ -91,12 +114,16 @@ operators.forEach(operator => {
             console.log(firstNum);
             console.log(secondNum);
             let total = operate(sign, Number(firstNum), Number(secondNum));
-            screen.innerText = total;
             sign = operator.innerText;
             charList = [];
             charList[0] = total;
             console.log(charList);
             charList[1] = sign;
+            historyText.push(operator.innerText);
+            history.innerText = historyText.join("");
+            screenText = [total.toString()];
+            screenText.push(operator.innerText);
+            screen.innerText = screenText.join("");
         }   
     });
 });
@@ -116,11 +143,18 @@ equals.addEventListener("click", () => {
         charList = [];
         charList[0] = total;
         console.log(charList);
+        historyText.push(equals.innerText);
+        historyText.push(total);
+        history.innerText = historyText.join("");
+        screenText = [total.toString()];
     }
 });
 
-clear.addEventListener("click", () => { // Implement clear functionality
+clear.addEventListener("click", () => { // Implement clear calculator functionality
     charList = [];
     sign = null;
+    screenText = [];
     screen.innerText = "";
+    historyText = [];
+    history.innerText = "";
 });
