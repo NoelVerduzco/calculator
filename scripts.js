@@ -118,3 +118,9 @@ equals.addEventListener("click", () => {
         console.log(charList);
     }
 });
+
+clear.addEventListener("click", () => { // Implement clear functionality
+    charList = [];
+    sign = null;
+    screen.innerText = "";
+});
