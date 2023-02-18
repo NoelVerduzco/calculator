@@ -25,6 +25,9 @@ function operate(operation, x, y) {
 function clearCalculator() {
     charList = [];
     sign = null;
+    isEqual = false;
+    isFirstDecimal = false;
+    isSecondDecimal = false;
     screenText = [];
     screen.innerText = "";
     historyText = [];
