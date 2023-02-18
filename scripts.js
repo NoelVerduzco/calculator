@@ -157,11 +157,11 @@ numbers.forEach(number => {
     });
 });
 
-
+// pattern.test(charList.join(""))
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
         if ((isEqual === false)) {
-            if ((charList.length !== 0) && (sign === null)) { // Prevent an operator from being the first input & allow only one operator per calculation
+            if ((pattern.test(charList.join(""))) && (sign === null)) { // Prevent an operator from being used as the first input and after a decimal
                 sign = operator.innerText;
                 console.log(typeof sign);
                 charList.push(operator.innerText);
