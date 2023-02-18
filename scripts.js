@@ -31,6 +31,20 @@ function clearCalculator() {
     history.innerText = "";
 }
 
+function findOperator(theChar) {
+    if ((theChar === "+") || (theChar === "-") || (theChar === "*") || (theChar === "/")) {
+        return theChar;
+    }
+}
+
+function findNum(whichNum) {
+    if (whichNum === "theFirst") {
+        return charList.join("").slice(0, charList.findIndex(findOperator));
+    } else if (whichNum === "theSecond") {
+        return charList.join("").slice(charList.findIndex(findOperator) + 1, charList.length);
+    }
+}
+
 const numbers = document.querySelectorAll(".number");
 
 const operators = document.querySelectorAll(".operator");
@@ -84,19 +98,21 @@ let isFirstDecimal = false;
 
 let isSecondDecimal = false;
 
-decimal.addEventListener("click", (e) => {
+decimal.addEventListener("click", () => {
     if (isFirstDecimal === false) {
         isFirstDecimal = true;
-        console.log(e);
+        charList.push(decimal.innerText);
+        console.log(charList);
     } else if ((isSecondDecimal === false) && (sign !== null)) {
         isSecondDecimal = true;
-        console.log(e);
+        charList.push(decimal.innerText);
+        console.log(charList);
     }
 });
 
 numbers.forEach(number => {
     number.addEventListener("click", () => {
-        if ((isEqual === true) && (isNaN(charList[0]) === false) && (sign === null)) { // Clear calculator after equals/number sequence
+        if ((isEqual === true) && (isNaN(findNum("theFirst")) === false) && (sign === null)) { // Clear calculator after equals/number sequence
             isEqual = false;
             clearCalculator();
         }
@@ -134,8 +150,7 @@ operators.forEach(operator => {
                     screenText.push(operator.innerText);
                     screen.innerText = screenText.join("");
                 }
-            }
-            if ((isNaN(charList[0]) === false) && (isNaN(charList[charList.length - 1]) === false) && (sign !== null)) { // Allow number/operator/repeat sequence
+            } else if ((isNaN(findNum("theFirst")) === false) && (isNaN(findNum("theSecond")) === false) && (sign !== null)) { // Allow number/operator/repeat sequence
                 let charString = charList.join("");
                 console.log(charString);
                 let numList = charString.split(sign);
@@ -155,7 +170,7 @@ operators.forEach(operator => {
                 screenText.push(operator.innerText);
                 screen.innerText = screenText.join("");
             }
-        } else if ((isEqual === true) && (isNaN(charList[0]) === false) && (sign === null)) { // Allow calculations after equals button press
+        } else if ((isEqual === true) && (isNaN(findNum("theFirst")) === false) && (sign === null)) { // Allow calculations after equals button press
             sign = operator.innerText;
             console.log(typeof sign);
             charList.push(operator.innerText);
@@ -169,7 +184,7 @@ operators.forEach(operator => {
 });
 
 equals.addEventListener("click", () => {
-    if ((isNaN(charList[0]) === false) && (isNaN(charList[charList.length - 1]) === false) && (sign !== null)) { // Prevent equals button click without number/operator/number sequence
+    if ((isNaN(findNum("theFirst")) === false) && (isNaN(findNum("theSecond")) === false) && (sign !== null)) { // Prevent equals button click without number/operator/number sequence
         let charString = charList.join("");
         console.log(charString);
         let numList = charString.split(sign);
