@@ -42,9 +42,17 @@ function findOperator(theChar) {
 
 function findNum(whichNum) { // Prevent empty strings returning false for isNaN checks
     if (whichNum === "theFirst") {
-        return parseInt(charList.join("").slice(0, charList.findIndex(findOperator)));
+        let theFirstNum = charList.join("").slice(0, charList.findIndex(findOperator));
+        if ((theFirstNum.includes(".")) && (pattern.test(theFirstNum.toString()))) {
+            return 1;
+        }
+        return parseInt(theFirstNum);
     } else if (whichNum === "theSecond") {
-        return parseInt(charList.join("").slice(charList.findIndex(findOperator) + 1, charList.length));
+        let theSecondNum = charList.join("").slice(charList.findIndex(findOperator) + 1, charList.length);
+        if ((theSecondNum.includes(".")) && (pattern.test(theSecondNum.toString()))) {
+            return 1;
+        }
+        return parseInt(theSecondNum);
     }
 }
 
@@ -95,21 +103,33 @@ let screenText = [];
 
 let charList = [];
 
+let sign = null;
+
 let isEqual = false;
 
 let isFirstDecimal = false;
 
 let isSecondDecimal = false;
 
+let pattern = /[0-9]/;
+
 decimal.addEventListener("click", () => {
     if (isFirstDecimal === false) {
         isFirstDecimal = true;
         charList.push(decimal.innerText);
         console.log(charList);
+        historyText.push(decimal.innerText);
+        history.innerText = historyText.join("");
+        screenText.push(decimal.innerText);
+        screen.innerText = screenText.join("");
     } else if ((isSecondDecimal === false) && (sign !== null)) {
         isSecondDecimal = true;
         charList.push(decimal.innerText);
         console.log(charList);
+        historyText.push(decimal.innerText);
+        history.innerText = historyText.join("");
+        screenText.push(decimal.innerText);
+        screen.innerText = screenText.join("");
     }
 });
 
@@ -137,7 +157,6 @@ numbers.forEach(number => {
     });
 });
 
-let sign = null;
 
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
