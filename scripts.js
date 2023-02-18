@@ -89,9 +89,6 @@ const decimal = document.querySelector("#decimal");
 // Convert the first and second number variables to number type
 // Pass numbers and operator into operate function
 
-// DECIMAL USAGE
-// Decimal can be used before and after sign
-
 // ROUND ON-SCREEN
 // Round to three decimals on screen and history display only
 
@@ -146,7 +143,7 @@ numbers.forEach(number => {
             history.innerText = historyText.join("");
             screenText.push(number.innerText);
             screen.innerText = screenText.join("");
-        } else if ((charList.length >= 1)) { // THIS WILL NEED TO BE UPDATED WHEN DECIMALS ARE ALLOWED AS FIRST INPUTS
+        } else if ((charList.length >= 1)) {
             charList.push(number.innerText);
             console.log(charList);
             historyText.push(number.innerText);
@@ -157,7 +154,6 @@ numbers.forEach(number => {
     });
 });
 
-// pattern.test(charList.join(""))
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
         if ((isEqual === false)) {
@@ -227,6 +223,6 @@ equals.addEventListener("click", () => {
     }
 });
 
-clear.addEventListener("click", () => { // Implement clear calculator functionality
+clear.addEventListener("click", () => {
     clearCalculator();
 });
