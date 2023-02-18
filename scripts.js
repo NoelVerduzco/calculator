@@ -71,7 +71,7 @@ let isEqual = false;
 
 numbers.forEach(number => {
     number.addEventListener("click", () => {
-        if ((isEqual === true) && (isNaN(charList[0]) === false) && (number.innerText !== "0")) { // Clear calculator after equals/number sequence
+        if ((isEqual === true) && (isNaN(charList[0]) === false) && (number.innerText !== "0") && (sign === null)) { // Clear calculator after equals/number sequence
             isEqual = false;
             clearCalculator();
         }
@@ -82,7 +82,7 @@ numbers.forEach(number => {
             history.innerText = historyText.join("");
             screenText.push(number.innerText);
             screen.innerText = screenText.join("");
-        } else if ((charList.length >= 1) && (number.innerText !== "0")) { // THIS WILL NEED TO BE UPDATED WHEN DECIMALS ARE ALLOWED AS FIRST INPUTS
+        } else if ((charList.length >= 1)) { // THIS WILL NEED TO BE UPDATED WHEN DECIMALS ARE ALLOWED AS FIRST INPUTS
             charList.push(number.innerText);
             console.log(charList);
             historyText.push(number.innerText);
@@ -110,7 +110,7 @@ operators.forEach(operator => {
                     screen.innerText = screenText.join("");
                 }
             }
-            if ((isNaN(charList[0]) === false) && (isNaN(charList[charList.length - 1]) === false) && (sign !== null)) { // Allows number/operator/repeat sequence
+            if ((isNaN(charList[0]) === false) && (isNaN(charList[charList.length - 1]) === false) && (sign !== null)) { // Allow number/operator/repeat sequence
                 let charString = charList.join("");
                 console.log(charString);
                 let numList = charString.split(sign);
@@ -130,6 +130,15 @@ operators.forEach(operator => {
                 screenText.push(operator.innerText);
                 screen.innerText = screenText.join("");
             }
+        } else if ((isEqual === true) && (isNaN(charList[0]) === false) && (sign === null)) { // Allow calculations after equals button press
+            sign = operator.innerText;
+            console.log(typeof sign);
+            charList.push(operator.innerText);
+            console.log(charList);
+            historyText.push(operator.innerText);
+            history.innerText = historyText.join("");
+            screenText.push(operator.innerText);
+            screen.innerText = screenText.join("");
         }
     });
 });
