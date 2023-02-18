@@ -56,10 +56,6 @@ const equals = document.querySelector("#equals");
 // DECIMAL USAGE
 // Decimal can be used before and after sign
 
-// FIX NUMBER PRESS AFTER EQUALS PRESS
-// 9 * 9 = 81 type a number
-// Proper function should clear calculator after number is pressed AFTER an equals is pressed
-
 // ROUND ON-SCREEN
 // Round to three decimals on screen and history display only
 
