@@ -22,6 +22,15 @@ function operate(operation, x, y) {
     if (operation === "/") return divide(x, y);
 }
 
+function clearCalculator() {
+    charList = [];
+    sign = null;
+    screenText = [];
+    screen.innerText = "";
+    historyText = [];
+    history.innerText = "";
+}
+
 const numbers = document.querySelectorAll(".number");
 
 const operators = document.querySelectorAll(".operator");
@@ -33,6 +42,8 @@ const history = document.querySelector("#history");
 const clear = document.querySelector("#clear");
 
 const equals = document.querySelector("#equals");
+
+const decimal = document.querySelector("#decimal");
 
 // Get the first number
 // Get the operator
@@ -69,9 +80,23 @@ let charList = [];
 
 let isEqual = false;
 
+let isFirstDecimal = false;
+
+let isSecondDecimal = false;
+
+decimal.addEventListener("click", (e) => {
+    if (isFirstDecimal === false) {
+        isFirstDecimal = true;
+        console.log(e);
+    } else if ((isSecondDecimal === false) && (sign !== null)) {
+        isSecondDecimal = true;
+        console.log(e);
+    }
+});
+
 numbers.forEach(number => {
     number.addEventListener("click", () => {
-        if ((isEqual === true) && (isNaN(charList[0]) === false) && (number.innerText !== "0") && (sign === null)) { // Clear calculator after equals/number sequence
+        if ((isEqual === true) && (isNaN(charList[0]) === false) && (sign === null)) { // Clear calculator after equals/number sequence
             isEqual = false;
             clearCalculator();
         }
@@ -169,12 +194,3 @@ equals.addEventListener("click", () => {
 clear.addEventListener("click", () => { // Implement clear calculator functionality
     clearCalculator();
 });
-
-function clearCalculator() {
-    charList = [];
-    sign = null;
-    screenText = [];
-    screen.innerText = "";
-    historyText = [];
-    history.innerText = "";
-}
