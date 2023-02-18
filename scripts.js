@@ -63,14 +63,22 @@ const equals = document.querySelector("#equals");
 // ROUND ON-SCREEN
 // Round to three decimals on screen and history display only
 
+// PREVENT TEXT OVERFLOW IN SCREEN AND HISTORY DISPLAYS
+
 let historyText = [];
 
 let screenText = [];
 
 let charList = [];
 
+let isEqual = false;
+
 numbers.forEach(number => {
     number.addEventListener("click", () => {
+        if ((isEqual === true) && (isNaN(charList[0]) === false) && (number.innerText !== "0")) { // Clear calculator after equals/number sequence
+            isEqual = false;
+            clearCalculator();
+        }
         if ((charList.length === 0) && (number.innerText !== "0")) { // Prevent 0 from being the first input
             charList.push(number.innerText);
             console.log(charList);
@@ -78,7 +86,7 @@ numbers.forEach(number => {
             history.innerText = historyText.join("");
             screenText.push(number.innerText);
             screen.innerText = screenText.join("");
-        } else if (charList.length >= 1) { // THIS WILL NEED TO BE UPDATED WHEN DECIMALS ARE ALLOWED AS FIRST INPUTS
+        } else if ((charList.length >= 1) && (number.innerText !== "0")) { // THIS WILL NEED TO BE UPDATED WHEN DECIMALS ARE ALLOWED AS FIRST INPUTS
             charList.push(number.innerText);
             console.log(charList);
             historyText.push(number.innerText);
@@ -93,38 +101,40 @@ let sign = null;
 
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
-        if (charList.length !== 0) { // Prevent an operator from being the first input
-            if (sign === null) { // Allow only one operator per calculation
+        if (isEqual === false) {
+            if (charList.length !== 0) { // Prevent an operator from being the first input
+                if (sign === null) { // Allow only one operator per calculation
+                    sign = operator.innerText;
+                    console.log(typeof sign);
+                    charList.push(operator.innerText);
+                    console.log(charList);
+                    historyText.push(operator.innerText);
+                    history.innerText = historyText.join("");
+                    screenText.push(operator.innerText);
+                    screen.innerText = screenText.join("");
+                }
+            }
+            if ((isNaN(charList[0]) === false) && (isNaN(charList[charList.length - 1]) === false) && (sign !== null)) { // Allows number/operator/repeat sequence
+                let charString = charList.join("");
+                console.log(charString);
+                let numList = charString.split(sign);
+                console.log(numList);
+                let [firstNum, secondNum] = numList;
+                console.log(firstNum);
+                console.log(secondNum);
+                let total = operate(sign, Number(firstNum), Number(secondNum));
                 sign = operator.innerText;
-                console.log(typeof sign);
-                charList.push(operator.innerText);
+                charList = [];
+                charList[0] = total;
                 console.log(charList);
+                charList[1] = sign;
                 historyText.push(operator.innerText);
                 history.innerText = historyText.join("");
+                screenText = [total.toString()];
                 screenText.push(operator.innerText);
                 screen.innerText = screenText.join("");
             }
         }
-        if ((isNaN(charList[0]) === false) && (isNaN(charList[charList.length - 1]) === false) && (sign !== null)) { // Allows number/operator/repeat sequence
-            let charString = charList.join("");
-            console.log(charString);
-            let numList = charString.split(sign);
-            console.log(numList);
-            let [firstNum, secondNum] = numList;
-            console.log(firstNum);
-            console.log(secondNum);
-            let total = operate(sign, Number(firstNum), Number(secondNum));
-            sign = operator.innerText;
-            charList = [];
-            charList[0] = total;
-            console.log(charList);
-            charList[1] = sign;
-            historyText.push(operator.innerText);
-            history.innerText = historyText.join("");
-            screenText = [total.toString()];
-            screenText.push(operator.innerText);
-            screen.innerText = screenText.join("");
-        }   
     });
 });
 
@@ -147,14 +157,19 @@ equals.addEventListener("click", () => {
         historyText.push(total);
         history.innerText = historyText.join("");
         screenText = [total.toString()];
+        isEqual = true;
     }
 });
 
 clear.addEventListener("click", () => { // Implement clear calculator functionality
+    clearCalculator();
+});
+
+function clearCalculator() {
     charList = [];
     sign = null;
     screenText = [];
     screen.innerText = "";
     historyText = [];
     history.innerText = "";
-});
+}

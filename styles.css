@@ -23,6 +23,7 @@ body {
     justify-content: flex-end;
     align-items: center;
     height: 100px;
+    background-color: blanchedalmond;
 }
 
 .firstRow {
@@ -38,6 +39,7 @@ body {
     align-items: center;
     align-self: stretch;
     flex: 1;
+    background-color: blanchedalmond;
 }
 
 button {
