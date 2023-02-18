@@ -139,17 +139,15 @@ let sign = null;
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
         if (isEqual === false) {
-            if (charList.length !== 0) { // Prevent an operator from being the first input
-                if (sign === null) { // Allow only one operator per calculation
-                    sign = operator.innerText;
-                    console.log(typeof sign);
-                    charList.push(operator.innerText);
-                    console.log(charList);
-                    historyText.push(operator.innerText);
-                    history.innerText = historyText.join("");
-                    screenText.push(operator.innerText);
-                    screen.innerText = screenText.join("");
-                }
+            if ((charList.length !== 0) && (sign === null)) { // Prevent an operator from being the first input & allow only one operator per calculation
+                sign = operator.innerText;
+                console.log(typeof sign);
+                charList.push(operator.innerText);
+                console.log(charList);
+                historyText.push(operator.innerText);
+                history.innerText = historyText.join("");
+                screenText.push(operator.innerText);
+                screen.innerText = screenText.join("");
             } else if ((isNaN(findNum("theFirst")) === false) && (isNaN(findNum("theSecond")) === false) && (sign !== null)) { // Allow number/operator/repeat sequence
                 let charString = charList.join("");
                 console.log(charString);
@@ -161,9 +159,10 @@ operators.forEach(operator => {
                 let total = operate(sign, Number(firstNum), Number(secondNum));
                 sign = operator.innerText;
                 charList = [];
-                charList[0] = total;
+                charList = total.toString().split("");
                 console.log(charList);
-                charList[1] = sign;
+                charList.push(sign);
+                console.log(charList);
                 historyText.push(operator.innerText);
                 history.innerText = historyText.join("");
                 screenText = [total.toString()];
@@ -196,7 +195,7 @@ equals.addEventListener("click", () => {
         screen.innerText = total;
         sign = null;
         charList = [];
-        charList[0] = total;
+        charList = total.toString().split("");
         console.log(charList);
         historyText.push(equals.innerText);
         historyText.push(total);
@@ -209,3 +208,6 @@ equals.addEventListener("click", () => {
 clear.addEventListener("click", () => { // Implement clear calculator functionality
     clearCalculator();
 });
+
+// let num = 1234;
+// num.toString().split("");
