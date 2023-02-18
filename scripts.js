@@ -37,11 +37,11 @@ function findOperator(theChar) {
     }
 }
 
-function findNum(whichNum) {
+function findNum(whichNum) { // Prevent empty strings returning false for isNaN checks
     if (whichNum === "theFirst") {
-        return charList.join("").slice(0, charList.findIndex(findOperator));
+        return parseInt(charList.join("").slice(0, charList.findIndex(findOperator)));
     } else if (whichNum === "theSecond") {
-        return charList.join("").slice(charList.findIndex(findOperator) + 1, charList.length);
+        return parseInt(charList.join("").slice(charList.findIndex(findOperator) + 1, charList.length));
     }
 }
 
@@ -138,7 +138,7 @@ let sign = null;
 
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
-        if (isEqual === false) {
+        if ((isEqual === false)) {
             if ((charList.length !== 0) && (sign === null)) { // Prevent an operator from being the first input & allow only one operator per calculation
                 sign = operator.innerText;
                 console.log(typeof sign);
@@ -208,6 +208,3 @@ equals.addEventListener("click", () => {
 clear.addEventListener("click", () => { // Implement clear calculator functionality
     clearCalculator();
 });
-
-// let num = 1234;
-// num.toString().split("");
