@@ -145,10 +145,19 @@ operators.forEach(operator => {
                 charList.push(operator.innerText);
                 updateDisplays(operator);
             } else if ((!isNaN(findNum("theFirst"))) && (!isNaN(findNum("theSecond"))) && (sign !== null)) { // Allow number/operator/repeat sequence
-                let charString = charList.join("");
-                let numList = charString.split(sign);
-                let [firstNum, secondNum] = numList;
-                let total = operate(sign, Number(firstNum), Number(secondNum));
+                let total = 0;
+                if (charList[0] === "-") {
+                    let charString = charList.join("");
+                    let removeNegative = charString.slice(1);
+                    let numList = removeNegative.split(sign);
+                    let [firstNum, secondNum] = numList;
+                    total = operate(sign, Number(`-${firstNum}`), Number(secondNum));
+                } else {
+                    let charString = charList.join("");
+                    let numList = charString.split(sign);
+                    let [firstNum, secondNum] = numList;
+                    total = operate(sign, Number(firstNum), Number(secondNum));
+                }
                 sign = operator.innerText;
                 charList = [];
                 charList = total.toString().split("");
@@ -171,9 +180,9 @@ equals.addEventListener("click", () => {
         let [firstNum, secondNum] = numList;
         let total = operate(sign, Number(firstNum), Number(secondNum));
         sign = null;
+        isEqual = true;
         charList = [];
         charList = total.toString().split("");
-        isEqual = true;
         updateDisplays(equals, total);
     }
 });
