@@ -23,14 +23,14 @@ function operate(operation, x, y) {
 }
 
 function clearCalculator() {
-    charList = [];
     sign = null;
     isEqual = false;
     isFirstDecimal = false;
     isSecondDecimal = false;
+    charList = [];
     screenText = [];
-    screen.innerText = "";
     historyText = [];
+    screen.innerText = "";
     history.innerText = "";
 }
 
@@ -88,17 +88,11 @@ function updateDisplays(button, total) {
 }
 
 const numbers = document.querySelectorAll(".number");
-
 const operators = document.querySelectorAll(".operator");
-
 const screen = document.querySelector(".screen");
-
 const history = document.querySelector("#history");
-
 const clear = document.querySelector("#clear");
-
 const equals = document.querySelector("#equals");
-
 const decimal = document.querySelector("#decimal");
 
 // ROUND ON-SCREEN
@@ -106,20 +100,13 @@ const decimal = document.querySelector("#decimal");
 
 // PREVENT TEXT OVERFLOW IN SCREEN AND HISTORY DISPLAYS
 
-let historyText = [];
-
-let screenText = [];
-
-let charList = [];
-
 let sign = null;
-
 let isEqual = false;
-
 let isFirstDecimal = false;
-
 let isSecondDecimal = false;
-
+let historyText = [];
+let screenText = [];
+let charList = [];
 let pattern = /[0-9]/;
 
 decimal.addEventListener("click", () => {
@@ -136,7 +123,7 @@ decimal.addEventListener("click", () => {
 
 numbers.forEach(number => {
     number.addEventListener("click", () => {
-        if ((isEqual === true) && (isNaN(findNum("theFirst")) === false) && (sign === null)) { // Clear calculator after equals/number sequence
+        if ((!isNaN(findNum("theFirst"))) && (isEqual === true) && (sign === null)) { // Clear calculator after equals/number sequence
             isEqual = false;
             clearCalculator();
         }
@@ -157,7 +144,7 @@ operators.forEach(operator => {
                 sign = operator.innerText;
                 charList.push(operator.innerText);
                 updateDisplays(operator);
-            } else if ((isNaN(findNum("theFirst")) === false) && (isNaN(findNum("theSecond")) === false) && (sign !== null)) { // Allow number/operator/repeat sequence
+            } else if ((!isNaN(findNum("theFirst"))) && (!isNaN(findNum("theSecond"))) && (sign !== null)) { // Allow number/operator/repeat sequence
                 let charString = charList.join("");
                 let numList = charString.split(sign);
                 let [firstNum, secondNum] = numList;
@@ -169,7 +156,7 @@ operators.forEach(operator => {
                 screenText = [total.toString()];
                 updateDisplays(operator);
             }
-        } else if ((isEqual === true) && (isNaN(findNum("theFirst")) === false) && (sign === null)) { // Allow calculations after equals button press
+        } else if ((!isNaN(findNum("theFirst"))) && (isEqual === true) && (sign === null)) { // Allow calculations after equals button press
             sign = operator.innerText;
             charList.push(operator.innerText);
             updateDisplays(operator);
@@ -178,7 +165,7 @@ operators.forEach(operator => {
 });
 
 equals.addEventListener("click", () => {
-    if ((isNaN(findNum("theFirst")) === false) && (isNaN(findNum("theSecond")) === false) && (sign !== null)) { // Prevent equals button click without number/operator/number sequence
+    if ((!isNaN(findNum("theFirst"))) && (!isNaN(findNum("theSecond"))) && (sign !== null)) { // Prevent equals button click without number/operator/number sequence
         let charString = charList.join("");
         let numList = charString.split(sign);
         let [firstNum, secondNum] = numList;
