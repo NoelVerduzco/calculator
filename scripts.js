@@ -40,19 +40,34 @@ function findOperator(theChar) {
     }
 }
 
-function findNum(whichNum) { // Prevent empty strings returning false for isNaN checks
+function findNum(whichNum) { // Validate whether the user has a first and second operand
     if (whichNum === "theFirst") {
-        let theFirstNum = charList.join("").slice(0, charList.findIndex(findOperator));
-        if ((theFirstNum.includes(".")) && (pattern.test(theFirstNum.toString()))) {
-            return 1;
+        if ((charList[0] === "-") && (sign !== null)) {
+            let theFirstNum = charList.join("").slice(1, charList.lastIndexOf(sign));
+            if (pattern.test(theFirstNum.toString())) {
+                return 1;
+            }
+        } else if ((charList[0] === "-") && (sign === null)) {
+            let theFirstNum = charList.join("").slice(1, charList.length);
+            if (pattern.test(theFirstNum.toString())) {
+                return 1;
+            }
+        } else if (sign !== null) {
+            let theFirstNum = charList.join("").slice(0, charList.findIndex(findOperator));
+            if (pattern.test(theFirstNum.toString())) {
+                return 1;
+            }
+        } else {
+            let theFirstNum = charList.join("").slice(0, charList.length);
+            if (pattern.test(theFirstNum.toString())) {
+                return 1;
+            }
         }
-        return parseInt(theFirstNum);
     } else if (whichNum === "theSecond") {
-        let theSecondNum = charList.join("").slice(charList.findIndex(findOperator) + 1, charList.length);
-        if ((theSecondNum.includes(".")) && (pattern.test(theSecondNum.toString()))) {
+        let theSecondNum = charList.join("").slice(charList.lastIndexOf(sign) + 1, charList.length);
+        if (pattern.test(theSecondNum.toString())) {
             return 1;
         }
-        return parseInt(theSecondNum);
     }
 }
 
@@ -114,7 +129,6 @@ decimal.addEventListener("click", () => {
     if (isFirstDecimal === false) {
         isFirstDecimal = true;
         charList.push(decimal.innerText);
-        console.log(charList);
         historyText.push(decimal.innerText);
         history.innerText = historyText.join("");
         screenText.push(decimal.innerText);
@@ -122,7 +136,6 @@ decimal.addEventListener("click", () => {
     } else if ((isSecondDecimal === false) && (sign !== null)) {
         isSecondDecimal = true;
         charList.push(decimal.innerText);
-        console.log(charList);
         historyText.push(decimal.innerText);
         history.innerText = historyText.join("");
         screenText.push(decimal.innerText);
@@ -138,14 +151,12 @@ numbers.forEach(number => {
         }
         if ((charList.length === 0) && (number.innerText !== "0")) { // Prevent 0 from being the first input
             charList.push(number.innerText);
-            console.log(charList);
             historyText.push(number.innerText);
             history.innerText = historyText.join("");
             screenText.push(number.innerText);
             screen.innerText = screenText.join("");
         } else if ((charList.length >= 1)) {
             charList.push(number.innerText);
-            console.log(charList);
             historyText.push(number.innerText);
             history.innerText = historyText.join("");
             screenText.push(number.innerText);
@@ -159,28 +170,20 @@ operators.forEach(operator => {
         if ((isEqual === false)) {
             if ((pattern.test(charList.join(""))) && (sign === null)) { // Prevent an operator from being used as the first input and after a decimal
                 sign = operator.innerText;
-                console.log(typeof sign);
                 charList.push(operator.innerText);
-                console.log(charList);
                 historyText.push(operator.innerText);
                 history.innerText = historyText.join("");
                 screenText.push(operator.innerText);
                 screen.innerText = screenText.join("");
             } else if ((isNaN(findNum("theFirst")) === false) && (isNaN(findNum("theSecond")) === false) && (sign !== null)) { // Allow number/operator/repeat sequence
                 let charString = charList.join("");
-                console.log(charString);
                 let numList = charString.split(sign);
-                console.log(numList);
                 let [firstNum, secondNum] = numList;
-                console.log(firstNum);
-                console.log(secondNum);
                 let total = operate(sign, Number(firstNum), Number(secondNum));
                 sign = operator.innerText;
                 charList = [];
                 charList = total.toString().split("");
-                console.log(charList);
                 charList.push(sign);
-                console.log(charList);
                 historyText.push(operator.innerText);
                 history.innerText = historyText.join("");
                 screenText = [total.toString()];
@@ -189,9 +192,7 @@ operators.forEach(operator => {
             }
         } else if ((isEqual === true) && (isNaN(findNum("theFirst")) === false) && (sign === null)) { // Allow calculations after equals button press
             sign = operator.innerText;
-            console.log(typeof sign);
             charList.push(operator.innerText);
-            console.log(charList);
             historyText.push(operator.innerText);
             history.innerText = historyText.join("");
             screenText.push(operator.innerText);
@@ -203,18 +204,13 @@ operators.forEach(operator => {
 equals.addEventListener("click", () => {
     if ((isNaN(findNum("theFirst")) === false) && (isNaN(findNum("theSecond")) === false) && (sign !== null)) { // Prevent equals button click without number/operator/number sequence
         let charString = charList.join("");
-        console.log(charString);
         let numList = charString.split(sign);
-        console.log(numList);
         let [firstNum, secondNum] = numList;
-        console.log(firstNum);
-        console.log(secondNum);
         let total = operate(sign, Number(firstNum), Number(secondNum));
         screen.innerText = total;
         sign = null;
         charList = [];
         charList = total.toString().split("");
-        console.log(charList);
         historyText.push(equals.innerText);
         historyText.push(total);
         history.innerText = historyText.join("");
