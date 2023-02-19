@@ -71,6 +71,22 @@ function findNum(whichNum) { // Validate whether the user has a first and second
     }
 }
 
+function updateDisplays(button, total) {
+    if (button.id === "equals") {
+        historyText.push(button.innerText);
+        historyText.push(total);
+        history.innerText = historyText.join("");
+        screenText = [];
+        screenText.push(total);
+        screen.innerText = screenText.join("");
+    } else {
+        historyText.push(button.innerText);
+        history.innerText = historyText.join("");
+        screenText.push(button.innerText);
+        screen.innerText = screenText.join("");
+    }
+}
+
 const numbers = document.querySelectorAll(".number");
 
 const operators = document.querySelectorAll(".operator");
@@ -84,25 +100,6 @@ const clear = document.querySelector("#clear");
 const equals = document.querySelector("#equals");
 
 const decimal = document.querySelector("#decimal");
-
-// Get the first number
-// Get the operator
-// Get the second number *
-// Get the equals
-// Calculate
-// Make the first number equal the total number
-// Clear the second number
-// Repeat from asterisk
-
-// Create listeners for 0 through 9
-// When the number button is pressed, append the number to a list
-// When an operator is clicked, append the operator to the list
-// When the number button is pressed, append the number to a list
-// When the equals button is clicked, convert the list to a string
-// Split the string at the operator, into an array with the first and second number
-// Create new variables, first and second numbers, and set values to array entries, respectively
-// Convert the first and second number variables to number type
-// Pass numbers and operator into operate function
 
 // ROUND ON-SCREEN
 // Round to three decimals on screen and history display only
@@ -129,17 +126,11 @@ decimal.addEventListener("click", () => {
     if (isFirstDecimal === false) {
         isFirstDecimal = true;
         charList.push(decimal.innerText);
-        historyText.push(decimal.innerText);
-        history.innerText = historyText.join("");
-        screenText.push(decimal.innerText);
-        screen.innerText = screenText.join("");
+        updateDisplays(decimal);
     } else if ((isSecondDecimal === false) && (sign !== null)) {
         isSecondDecimal = true;
         charList.push(decimal.innerText);
-        historyText.push(decimal.innerText);
-        history.innerText = historyText.join("");
-        screenText.push(decimal.innerText);
-        screen.innerText = screenText.join("");
+        updateDisplays(decimal);
     }
 });
 
@@ -151,16 +142,10 @@ numbers.forEach(number => {
         }
         if ((charList.length === 0) && (number.innerText !== "0")) { // Prevent 0 from being the first input
             charList.push(number.innerText);
-            historyText.push(number.innerText);
-            history.innerText = historyText.join("");
-            screenText.push(number.innerText);
-            screen.innerText = screenText.join("");
+            updateDisplays(number);
         } else if ((charList.length >= 1)) {
             charList.push(number.innerText);
-            historyText.push(number.innerText);
-            history.innerText = historyText.join("");
-            screenText.push(number.innerText);
-            screen.innerText = screenText.join("");
+            updateDisplays(number);
         }
     });
 });
@@ -171,10 +156,7 @@ operators.forEach(operator => {
             if ((pattern.test(charList.join(""))) && (sign === null)) { // Prevent an operator from being used as the first input and after a decimal
                 sign = operator.innerText;
                 charList.push(operator.innerText);
-                historyText.push(operator.innerText);
-                history.innerText = historyText.join("");
-                screenText.push(operator.innerText);
-                screen.innerText = screenText.join("");
+                updateDisplays(operator);
             } else if ((isNaN(findNum("theFirst")) === false) && (isNaN(findNum("theSecond")) === false) && (sign !== null)) { // Allow number/operator/repeat sequence
                 let charString = charList.join("");
                 let numList = charString.split(sign);
@@ -184,19 +166,13 @@ operators.forEach(operator => {
                 charList = [];
                 charList = total.toString().split("");
                 charList.push(sign);
-                historyText.push(operator.innerText);
-                history.innerText = historyText.join("");
                 screenText = [total.toString()];
-                screenText.push(operator.innerText);
-                screen.innerText = screenText.join("");
+                updateDisplays(operator);
             }
         } else if ((isEqual === true) && (isNaN(findNum("theFirst")) === false) && (sign === null)) { // Allow calculations after equals button press
             sign = operator.innerText;
             charList.push(operator.innerText);
-            historyText.push(operator.innerText);
-            history.innerText = historyText.join("");
-            screenText.push(operator.innerText);
-            screen.innerText = screenText.join("");
+            updateDisplays(operator);
         }
     });
 });
@@ -207,15 +183,11 @@ equals.addEventListener("click", () => {
         let numList = charString.split(sign);
         let [firstNum, secondNum] = numList;
         let total = operate(sign, Number(firstNum), Number(secondNum));
-        screen.innerText = total;
         sign = null;
         charList = [];
         charList = total.toString().split("");
-        historyText.push(equals.innerText);
-        historyText.push(total);
-        history.innerText = historyText.join("");
-        screenText = [total.toString()];
         isEqual = true;
+        updateDisplays(equals, total);
     }
 });
 
