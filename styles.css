@@ -49,12 +49,15 @@ button {
     height: 100px;
     font-size: 35px;
     background-color: #1e2124;
+    border-radius: .5em;
+    border: 4px solid #7289da;
 }
 
 .shell,
 .screen,
 #history {
-    border: 1px solid black;
+    border: 4px solid #7289da;
+    border-radius: .25em;
 }
 
 .firstRow,
