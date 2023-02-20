@@ -224,7 +224,17 @@ clear.addEventListener("click", () => {
 document.addEventListener("keydown", (e) => {
     buttons.forEach(button => {
         if (e.key === button.id) {
+            button.classList.add("active");
             button.click();
         }
     });
 });
+
+buttons.forEach(button => {
+    button.addEventListener("transitionend", removeActive)
+});
+
+function removeActive(e) {
+    if (e.propertyName !== "box-shadow") return;
+    this.classList.remove("active");
+}

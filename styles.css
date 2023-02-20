@@ -60,9 +60,15 @@ button {
     border-radius: .5em;
     border: 5px solid #071220;
     box-shadow: 0 9px #222;
+    transition:all 0.1s;
 }
 
 button:active {
+    box-shadow: 0 5px #111;
+    transform: translateY(4px);
+}
+
+.active {
     box-shadow: 0 5px #111;
     transform: translateY(4px);
 }
