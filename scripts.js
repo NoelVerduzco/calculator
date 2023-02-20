@@ -169,6 +169,7 @@ operators.forEach(operator => {
                 charList.push(sign);
                 screenText = [total.toString()];
                 updateDisplays(operator);
+                isSecondDecimal = false;
             }
         } else if ((!isNaN(findNum("theFirst"))) && (isEqual === true) && (sign === null)) { // Allow calculations after equals button press
             sign = operator.innerText;
