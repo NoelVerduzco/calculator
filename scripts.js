@@ -98,7 +98,7 @@ const decimal = document.querySelector("#decimal");
 // ROUND ON-SCREEN
 // Round to three decimals on screen and history display only
 
-// PREVENT TEXT OVERFLOW IN SCREEN AND HISTORY DISPLAYS
+// switch between operators before pressing next number
 
 let sign = null;
 let isEqual = false;
@@ -157,11 +157,11 @@ operators.forEach(operator => {
                     let removeNegative = charString.slice(1);
                     let numList = removeNegative.split(sign);
                     let [firstNum, secondNum] = numList;
-                    total = operate(sign, Number(`-${firstNum}`), Number(secondNum));
+                    total = Number(operate(sign, Number(`-${firstNum}`), Number(secondNum)).toPrecision(3));
                 } else {
                     let numList = charString.split(sign);
                     let [firstNum, secondNum] = numList;
-                    total = operate(sign, Number(firstNum), Number(secondNum));
+                    total = Number(operate(sign, Number(firstNum), Number(secondNum)).toPrecision(3));
                 }
                 sign = operator.innerText;
                 charList = [];
@@ -186,7 +186,8 @@ equals.addEventListener("click", () => {
         let charString = charList.join("");
         let numList = charString.split(sign);
         let [firstNum, secondNum] = numList;
-        let total = operate(sign, Number(firstNum), Number(secondNum));
+        let total = Number(operate(sign, Number(firstNum), Number(secondNum)).toPrecision(3));
+        console.log(typeof total);
         sign = null;
         isEqual = true;
         charList = [];
