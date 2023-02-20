@@ -11,7 +11,7 @@ function multiply(x, y) {
 }
 
 function divide(x, y) {
-    if (y === 0) return "gghard";
+    if (y === 0) return Infinity;
     return x / y;
 }
 
