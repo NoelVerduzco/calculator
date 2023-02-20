@@ -87,6 +87,8 @@ function updateDisplays(button, total) {
     }
 }
 
+const buttons = document.querySelectorAll("button");
+
 const numbers = document.querySelectorAll(".number");
 const operators = document.querySelectorAll(".operator");
 const screen = document.querySelector(".screen");
@@ -96,6 +98,8 @@ const equals = document.getElementById("=");
 const decimal = document.getElementById(".");
 
 // switch between operators before pressing next number
+
+// add a backspace button
 
 let sign = null;
 let isEqual = false;
@@ -215,4 +219,12 @@ equals.addEventListener("click", () => {
 
 clear.addEventListener("click", () => {
     clearCalculator();
+});
+
+document.addEventListener("keydown", (e) => {
+    buttons.forEach(button => {
+        if (e.key === button.id) {
+            button.click();
+        }
+    });
 });
