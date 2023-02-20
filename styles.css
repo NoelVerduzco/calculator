@@ -3,7 +3,7 @@
     padding: 0;
     font-size: 0px;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: white;
+    color: whitesmoke;
 }
 
 body {
@@ -11,12 +11,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1e2124;
+    background-color: #b3b083;
 }
 
 .shell {
-    padding: 20px;
+    padding: 30px;
     background-color: #FC9FB1;
+    border-radius: 20px;
+    border: 10px solid #071220;
 }
 
 .screen {
@@ -26,8 +28,10 @@ body {
     font-size: 60px;
     height: 100px;
     width: 432px;
-    background-color: #8CB360;
+    background-color: rgb(197, 230, 143);
+    color: #071220;
     padding: 0 0;
+    border: 5px solid #071220;
 }
 
 .firstRow {
@@ -44,7 +48,9 @@ body {
     align-self: stretch;
     height: 40px;
     width: 312px;
-    background-color: #EC4653;
+    background-color: rgba(245, 245, 245, 0.527);
+    color: #071220;
+    border: 5px solid #071220;
 }
 
 button {
@@ -53,10 +59,16 @@ button {
     font-size: 35px;
     border-radius: .5em;
     border: 5px solid #071220;
+    box-shadow: 0 9px #222;
 }
 
-#clear {
-    background-color: #0e1111;
+button:active {
+    box-shadow: 0 5px #111;
+    transform: translateY(4px);
+}
+
+#C {
+    background-color: #0e1111d0;
 }
 
 .number {
@@ -67,19 +79,12 @@ button {
     background-color: #8CB360;
 }
 
-#equals {
-    background-color: #0e1111;
+#\= {
+    background-color: #0e1111d0;
 }
 
-#decimal {
-    background-color: #0e1111;
-}
-
-.shell,
-.screen,
-#history {
-    border: 5px solid #071220;
-    border-radius: .25em;
+#\. {
+    background-color: #0e1111d0;
 }
 
 .firstRow,
