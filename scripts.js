@@ -110,6 +110,9 @@ let charList = [];
 let pattern = /[0-9]/;
 
 decimal.addEventListener("click", () => {
+    if (charList.join("") === "Infinity") {
+        clearCalculator();
+    }
     if (isFirstDecimal === false) {
         isFirstDecimal = true;
         charList.push(decimal.innerText);
@@ -123,6 +126,9 @@ decimal.addEventListener("click", () => {
 
 numbers.forEach(number => {
     number.addEventListener("click", () => {
+        if (charList.join("") === "Infinity") {
+            clearCalculator();
+        }
         if ((!isNaN(findNum("theFirst"))) && (isEqual === true) && (sign === null)) { // Clear calculator after equals/number sequence
             isEqual = false;
             clearCalculator();
@@ -145,6 +151,9 @@ numbers.forEach(number => {
 
 operators.forEach(operator => {
     operator.addEventListener("click", () => {
+        if (charList.join("") === "Infinity") {
+            clearCalculator();
+        }
         if ((isEqual === false)) {
             if ((pattern.test(charList.join(""))) && (sign === null)) { // Prevent an operator from being used as the first input and after a decimal
                 sign = operator.innerText;
@@ -183,6 +192,9 @@ operators.forEach(operator => {
 });
 
 equals.addEventListener("click", () => {
+    if (charList.join("") === "Infinity") {
+        clearCalculator();
+    }
     if ((!isNaN(findNum("theFirst"))) && (!isNaN(findNum("theSecond"))) && (sign !== null)) { // Prevent equals button click without number/operator/number sequence
         let charString = charList.join("");
         let numList = charString.split(sign);
