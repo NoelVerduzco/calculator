@@ -130,7 +130,13 @@ numbers.forEach(number => {
         if ((charList.length === 0) && (number.innerText !== "0")) { // Prevent 0 from being the first input
             charList.push(number.innerText);
             updateDisplays(number);
-        } else if ((charList.length >= 1)) {
+        } else if ((charList.length >= 1) && (isEqual)) {
+            charList.push(number.innerText);
+            historyText = charList;
+            history.innerText = historyText.join("");
+            screenText.push(number.innerText);
+            screen.innerText = screenText.join("");
+        } else if ((charList.length >= 1) && (isEqual === false)) {
             charList.push(number.innerText);
             updateDisplays(number);
         }
@@ -146,14 +152,13 @@ operators.forEach(operator => {
                 updateDisplays(operator);
             } else if ((!isNaN(findNum("theFirst"))) && (!isNaN(findNum("theSecond"))) && (sign !== null)) { // Allow number/operator/repeat sequence
                 let total = 0;
+                let charString = charList.join("");
                 if (charList[0] === "-") {
-                    let charString = charList.join("");
                     let removeNegative = charString.slice(1);
                     let numList = removeNegative.split(sign);
                     let [firstNum, secondNum] = numList;
                     total = operate(sign, Number(`-${firstNum}`), Number(secondNum));
                 } else {
-                    let charString = charList.join("");
                     let numList = charString.split(sign);
                     let [firstNum, secondNum] = numList;
                     total = operate(sign, Number(firstNum), Number(secondNum));
@@ -168,7 +173,10 @@ operators.forEach(operator => {
         } else if ((!isNaN(findNum("theFirst"))) && (isEqual === true) && (sign === null)) { // Allow calculations after equals button press
             sign = operator.innerText;
             charList.push(operator.innerText);
-            updateDisplays(operator);
+            historyText = charList;
+            history.innerText = historyText.join("");
+            screenText.push(operator.innerText);
+            screen.innerText = screenText.join("");
         }
     });
 });
